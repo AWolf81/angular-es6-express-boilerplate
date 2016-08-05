@@ -1,0 +1,30 @@
+<!-- <pre>{{todoCtrl.todos | json : 2}}</pre> -->
+<h1>Todo App</h1>
+<form ng-submit="todoCtrl.add()" class="form-inline">
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="enter your next todo..." ng-model="todoCtrl.newTodo.title"/>
+        <!-- <input type="checkbox" class="form-control"/> -->
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">add</button>
+        <button class="btn btn-default" type="button" ng-click="todoCtrl.toggleFormDone(todoCtrl.newTodo)">{{ todoCtrl.newTodo.done ? 'done': 'active'}}</button>
+    </div>
+</form>
+
+<div class="alert alert-info" ng-if="todoCtrl.todos.length === 0">
+    No todos yet. Add your first todo.
+</div>
+<div class="list-group" ng-if="todoCtrl.todos.length > 0">
+    <div class="list-group-item todo" ng-repeat="todo in todoCtrl.todos | orderBy : '-createdAt'">
+        <div class="list-group-item-heading">
+            <h1>
+                <span ng-click="todoCtrl.toggleDone(todo)" ng-class="{'todo-done': todo.done}">{{todo.title}}</span>
+                <button ng-click="todoCtrl.remove(todo)" class="btn btn-default pull-right"><i class="fa fa-remove"></i></button>
+            </h1>
+        </div>
+        <div class="list-group-item-text">
+            <!-- created by user here later -->
+            <span am-time-ago="todo.createdAt | amUtc" title="{{todo.createdAt | amUtc |  amDateFormat: 'YY-MM-DD HH:MM[Z]'}}"></span>
+        </div>
+    </div>
+</div>
